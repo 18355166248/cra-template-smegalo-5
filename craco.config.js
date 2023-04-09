@@ -57,6 +57,7 @@ module.exports = {
        *  - https://babeljs.io/docs/en/babel-plugin-proposal-decorators#legacy
        */
       setPublicClassFields: true,
+      privateFieldsAsSymbols: true,
     },
     presets: [
       [
