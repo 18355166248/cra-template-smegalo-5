@@ -2,8 +2,10 @@ import Home from "@/pages/Home";
 import Layout from "@/pages/Layout";
 import NotFound from "@/pages/NotFound";
 import { RootErrorBoundary } from "@/pages/RootErrorBoundary";
-import Test from "@/pages/Test";
+import { lazy } from "react";
 import { createBrowserRouter, Outlet } from "react-router-dom";
+
+const Test = lazy(() => import(/* webpackChunkName: "test" */ "@/pages/Test"));
 
 export const router = createBrowserRouter([
   {
