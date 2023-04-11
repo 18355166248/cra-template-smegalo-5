@@ -1,5 +1,6 @@
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
+import { Suspense } from "react";
 
 export function Fallback() {
   return <p>加载中...</p>;
@@ -55,7 +56,9 @@ function App() {
         </div>
       </div>
 
-      <RouterProvider router={router} fallbackElement={<Fallback />} />
+      <Suspense>
+        <RouterProvider router={router} fallbackElement={<Fallback />} />
+      </Suspense>
     </div>
   );
 }
