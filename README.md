@@ -6,7 +6,6 @@
 - [@craco/craco@7](https://github.com/dilanx/craco)
 - [tailwindcss@3](https://tailwindcss.com/docs/installation/using-postcss)
 - [webpack@5](https://github.com/webpack/webpack)
-- [antd@4](https://4x.ant.design/docs/react/use-with-create-react-app-cn)
 - [react@18.2](https://github.com/facebook/react)
 - [react-router-dom@6.10](https://github.com/remix-run/react-router)
 
