@@ -49,16 +49,16 @@ module.exports = {
    * 扩展 babel 配置
    */
   babel: {
-    assumptions: {
-      /**
-       * https://babeljs.io/docs/en/assumptions#setpublicclassfields
-       *
-       * 装饰器的 legancy: true，依赖此配置
-       *  - https://babeljs.io/docs/en/babel-plugin-proposal-decorators#legacy
-       */
-      setPublicClassFields: true,
-      privateFieldsAsSymbols: true,
-    },
+    // assumptions: {
+    //   /**
+    //    * https://babeljs.io/docs/en/assumptions#setpublicclassfields
+    //    *
+    //    * 装饰器的 legancy: true，依赖此配置
+    //    *  - https://babeljs.io/docs/en/babel-plugin-proposal-decorators#legacy
+    //    */
+    //   setPublicClassFields: true,
+    //   privateFieldsAsSymbols: true,
+    // },
     presets: [
       [
         "@babel/preset-env",
@@ -89,6 +89,8 @@ module.exports = {
         },
         "antd",
       ],
+      ["@babel/plugin-proposal-private-property-in-object", { loose: true }],
+      ["@babel/plugin-proposal-private-methods", { loose: true }],
       [
         // @babel/plugin-proposal-decorators 需要在 @babel/plugin-proposal-class-properties 之前，保证装饰器先处理
         "@babel/plugin-proposal-decorators",
@@ -284,15 +286,35 @@ module.exports = {
         ],
       ];
 
-      webpackConfig.optimization.minimizer.map((plugin) => {
+      webpackConfig.optimization.minimizer = webpackConfig.optimization.minimizer.map((plugin) => {
         /**
          * TerserPlugin
          */
         if (plugin instanceof TerserPlugin) {
-          Object.assign(plugin.options.terserOptions.compress, {
-            drop_debugger: shouldDropDebugger, // 删除 debugger
-            drop_console: shouldDropConsole, // 删除 console
-          });
+          plugin = new TerserPlugin({
+            terserOptions: {
+              "parse": {
+                "ecma": 8
+              },
+              "compress": {
+                "ecma": 5,
+                "warnings": false,
+                "comparisons": false,
+                "inline": 2,
+                drop_console: shouldDropConsole,
+              },
+              "mangle": {
+                "safari10": true
+              },
+              "keep_classnames": false,
+              "keep_fnames": false,
+              "output": {
+                "ecma": 5,
+                "comments": false,
+                "ascii_only": true
+              }
+            },
+          })
         }
 
         return plugin;
@@ -351,7 +373,7 @@ module.exports = {
     {
       plugin: CracoLessPlugin,
       options: {
-        modifyLessRule(lessRule, context) {
+        modifyLessRule (lessRule, context) {
           return {
             ...lessRule,
             ...{
@@ -376,7 +398,7 @@ module.exports = {
     {
       plugin: CracoLessPlugin,
       options: {
-        modifyLessRule(lessRule, context) {
+        modifyLessRule (lessRule, context) {
           return {
             ...lessRule,
             ...{

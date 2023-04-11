@@ -47,7 +47,6 @@ module.exports = {
     GENERATE_SOURCEMAP: true, // 是否开启 sourcemap
     REACT_APP_SOURCE_MAPPING_URL: `http://sourcemap.ximalaya.com/${projectName}/${outputDir}/`, // 暂时仅支持 http 协议
     REMOVE_FILENAME_HASH: false,
-    SHOULD_DROP_DEBUGGER: true, // 打包时是否移除 debugger
     SHOULD_DROP_CONSOLE: true, // 打包时是否移除 console
   },
 };

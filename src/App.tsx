@@ -6,7 +6,10 @@ export function Fallback() {
   return <p>加载中...</p>;
 }
 
+console.log("6899755555"); // 生产打包会自动删除
+
 function App() {
+  console.log("6899755555"); // 生产打包会自动删除
   return (
     <div className="App ml-10">
       <header className="mt-20 text-pink-600 font-extrabold text-4xl tracking-tight">
