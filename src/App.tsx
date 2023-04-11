@@ -1,10 +1,10 @@
 function App() {
   return (
     <div className="App">
-      <header className="mt-40 text-center text-pink-600 font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight dark:text-white">
+      <header className="mt-20 text-center text-pink-600 font-extrabold text-4xl tracking-tight">
         CRA-TEMPLATE-SMEGALO
       </header>
-      <div className="mt-20 text-center text-blue-400 font-extrabold text-xl sm:text-xl lg:text-xl tracking-tight dark:text-white">
+      <div className="mt-10 text-center text-blue-400 font-extrabold text-xl tracking-tight">
         <div>使用框架</div>
         <div className="mb-2">
           <a
