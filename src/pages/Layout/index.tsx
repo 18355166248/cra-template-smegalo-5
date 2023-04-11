@@ -1,33 +1,30 @@
-import { Link, Outlet, useResolvedPath, useMatch } from "react-router-dom";
-import type { LinkProps } from "react-router-dom";
+import React, { FC } from "react";
+import "./style/index.scoped.scss";
+import MenuLayout from "./MenuLayout";
+import Header from "./Header";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import { Outlet } from "react-router-dom";
 
-function CustomLink({ children, to, ...props }: LinkProps) {
-  let resolved = useResolvedPath(to);
-  let match = useMatch({ path: resolved.pathname, end: true });
-
+const XLayout: FC = () => {
   return (
-    <Link
-      className={`mr-3 text-lg ${
-        match ? "underline text-orange-500" : ""
-      } underline-offset-4`}
-      to={to}
-      {...props}
-    >
-      {children}
-    </Link>
-  );
-}
-
-const Layout = () => {
-  return (
-    <div className="mt-10">
-      <nav className="mb-2">
-        <CustomLink to="/">Home</CustomLink>
-        <CustomLink to="/Test">Test</CustomLink>
-      </nav>
-      <Outlet />
+    <div className="flex flex-col h-full overflow-hidden">
+      <Header />
+      <div className="main flex overflow-hidden flex-1">
+        <div className="flex flex-col flex-none h-full w120 menu">
+          <MenuLayout />
+        </div>
+        <div className="flex flex-grow flex-col overflow-hidden">
+          <div className="flex-grow h-full overflow-y-scroll">
+            <div className="bg-white min-h-full">
+              <ErrorBoundary>
+                <Outlet />
+              </ErrorBoundary>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Layout;
+export default XLayout;

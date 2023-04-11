@@ -9,6 +9,10 @@ body {
     "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+#root {
+  height: 100%;
+}
+
 .clearfix:after {
   display: block;
   clear: both;
@@ -20,4 +24,13 @@ body {
 
 .clearfix {
   zoom: 1;
+}
+
+$base-height: 12px;
+
+:root {
+  --color: #1890ff;
+  --mi-color: #1890ff;
+  --gray-color: #d9d9d9;
+  --base-height: #{$base-height};
 }

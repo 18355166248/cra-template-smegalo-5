@@ -1,28 +1,21 @@
-import Home from "@/pages/Home";
-import Layout from "@/pages/Layout";
+import XLayout from "@/pages/Layout";
 import NotFound from "@/pages/NotFound";
-import { RootErrorBoundary } from "@/pages/RootErrorBoundary";
 import { lazy } from "react";
-import { createBrowserRouter, Outlet } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
-const Test = lazy(() => import(/* webpackChunkName: "test" */ "@/pages/Test"));
+const Test1 = lazy(
+  () => import(/* webpackChunkName: "test" */ "@/pages/Test1")
+);
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <XLayout />,
     children: [
-      { index: true, element: <Home /> },
       {
-        path: "",
-        element: <Outlet />,
-        errorElement: <RootErrorBoundary />,
-        children: [
-          {
-            path: "/test",
-            element: <Test />,
-          },
-        ],
+        path: "/test1",
+        element: <Test1 />,
+        children: [],
       },
       { path: "*", element: <NotFound /> },
     ],

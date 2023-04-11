@@ -1,5 +1,9 @@
 # cra-template-smegalo-5
 
+## 后台管理系统
+
+使用的是 [antd@4](https://4x.ant.design/docs/react/introduce-cn)
+
 使用框架
 
 - [create-react-app@5](https://github.com/facebook/create-react-app)
@@ -8,6 +12,7 @@
 - [webpack@5](https://github.com/webpack/webpack)
 - [react@18.2](https://github.com/facebook/react)
 - [react-router-dom@6.10](https://github.com/remix-run/react-router)
+- [antd@4](https://4x.ant.design/docs/react/introduce-cn)
 
 ## 配置
 
