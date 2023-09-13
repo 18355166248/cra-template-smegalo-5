@@ -161,6 +161,10 @@ module.exports = {
    * 扩展 webpack 相关配置
    */
   webpack: {
+    cache: {
+      type: "filesystem",
+      allowCollectingMemory: true,
+    },
     /**
      * 新增 webpack plugin
      */
@@ -286,39 +290,40 @@ module.exports = {
         ],
       ];
 
-      webpackConfig.optimization.minimizer = webpackConfig.optimization.minimizer.map((plugin) => {
-        /**
-         * TerserPlugin
-         */
-        if (plugin instanceof TerserPlugin) {
-          plugin = new TerserPlugin({
-            terserOptions: {
-              "parse": {
-                "ecma": 8
+      webpackConfig.optimization.minimizer =
+        webpackConfig.optimization.minimizer.map((plugin) => {
+          /**
+           * TerserPlugin
+           */
+          if (plugin instanceof TerserPlugin) {
+            plugin = new TerserPlugin({
+              terserOptions: {
+                parse: {
+                  ecma: 8,
+                },
+                compress: {
+                  ecma: 5,
+                  warnings: false,
+                  comparisons: false,
+                  inline: 2,
+                  drop_console: shouldDropConsole,
+                },
+                mangle: {
+                  safari10: true,
+                },
+                keep_classnames: false,
+                keep_fnames: false,
+                output: {
+                  ecma: 5,
+                  comments: false,
+                  ascii_only: true,
+                },
               },
-              "compress": {
-                "ecma": 5,
-                "warnings": false,
-                "comparisons": false,
-                "inline": 2,
-                drop_console: shouldDropConsole,
-              },
-              "mangle": {
-                "safari10": true
-              },
-              "keep_classnames": false,
-              "keep_fnames": false,
-              "output": {
-                "ecma": 5,
-                "comments": false,
-                "ascii_only": true
-              }
-            },
-          })
-        }
+            });
+          }
 
-        return plugin;
-      });
+          return plugin;
+        });
 
       /**
        * webpack split chunks
@@ -373,7 +378,7 @@ module.exports = {
     {
       plugin: CracoLessPlugin,
       options: {
-        modifyLessRule (lessRule, context) {
+        modifyLessRule(lessRule, context) {
           return {
             ...lessRule,
             ...{
@@ -398,7 +403,7 @@ module.exports = {
     {
       plugin: CracoLessPlugin,
       options: {
-        modifyLessRule (lessRule, context) {
+        modifyLessRule(lessRule, context) {
           return {
             ...lessRule,
             ...{

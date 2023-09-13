@@ -1,7 +1,9 @@
 import React, { FC, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, MenuProps } from "antd";
-import { getItem } from "./menu.util";
+import { getItem, getOpenKeys } from "./menu.util";
+import { routerConfig } from "@/router/data";
+import { MenuInfo } from "rc-menu/lib/interface";
 
 type SelectKeys = [string];
 
@@ -9,7 +11,10 @@ interface Props {
   app?: any;
 }
 
-const items: MenuProps["items"] = [getItem("测试", "/key")];
+const items: MenuProps["items"] = getItem(routerConfig);
+
+// 默认展开菜单
+const defaultOpenKeys = getOpenKeys(items);
 
 const MenuLayout: FC<Props> = () => {
   const location = useLocation();
@@ -19,10 +24,19 @@ const MenuLayout: FC<Props> = () => {
     return [location.pathname];
   }, [location.pathname]);
 
+  function onClickMenu(info: MenuInfo) {
+    navigate(info.key);
+  }
+
   return (
-    <div className="h-full" style={{ width: 120 }}>
-      <Menu items={items} selectedKeys={selectKeys}></Menu>
-    </div>
+    <Menu
+      defaultOpenKeys={defaultOpenKeys}
+      items={items}
+      selectedKeys={selectKeys}
+      mode="inline"
+      onClick={onClickMenu}
+      theme="dark"
+    ></Menu>
   );
 };
 

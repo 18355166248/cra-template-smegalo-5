@@ -1,23 +1,25 @@
 import XLayout from "@/pages/Layout";
 import NotFound from "@/pages/NotFound";
-import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
+import { AntdItemTypeWithRouter } from "./types";
+import { isArray, pick } from "lodash-es";
+import { routerConfig } from "./data";
 
-const Test1 = lazy(
-  () => import(/* webpackChunkName: "test" */ "@/pages/Test1")
-);
+// 过滤路由配置中的菜单属性
+function gerRouterParams(list: AntdItemTypeWithRouter[]) {
+  return list.map((item: any) => {
+    if (isArray(item?.children)) {
+      item.children = gerRouterParams(item?.children);
+    }
+    return pick(item, "label", "key", "element", "path", "children");
+  });
+}
+const routerParams = gerRouterParams(routerConfig);
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <XLayout />,
-    children: [
-      {
-        path: "/test1",
-        element: <Test1 />,
-        children: [],
-      },
-      { path: "*", element: <NotFound /> },
-    ],
+    children: [...routerParams, { path: "*", element: <NotFound /> }],
   },
 ]);

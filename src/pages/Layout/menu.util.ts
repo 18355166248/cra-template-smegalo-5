@@ -1,4 +1,6 @@
+import { AntdItemTypeWithRouter } from "@/router/types";
 import { MenuProps } from "antd";
+import { omit, pick } from "lodash-es";
 
 export interface MENU_INTERFACE {
   childList: MENU_INTERFACE[];
@@ -54,18 +56,39 @@ function getProLayoutMenu(
 }
 
 type MenuItem = Required<MenuProps>["items"][number];
+
+interface GetItemProps {
+  label: React.ReactNode;
+  key: React.Key;
+  icon?: React.ReactNode;
+  children?: GetItemProps[];
+  type?: "group";
+}
+
 export function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-  type?: "group"
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type,
-  } as unknown as MenuItem;
+  list: AntdItemTypeWithRouter[],
+  parentPath?: string
+): MenuItem[] {
+  return list.map((item: any) => {
+    const v = { ...item }; // 防止影响源数据
+    v.path = (parentPath || "") + "/" + v.path;
+    v.key = v.path;
+
+    if (Array.isArray(item.children)) {
+      v.children = getItem(item.children, v.path);
+    }
+
+    return omit(v, "element") as MenuItem;
+  });
+}
+
+export function getOpenKeys(list: AntdItemTypeWithRouter[]): string[] {
+  let keys: string[] = [];
+  list.forEach((item: any) => {
+    keys.push(item.key);
+    if (Array.isArray(item.children)) {
+      keys = keys.concat(getOpenKeys(item.children));
+    }
+  });
+  return keys;
 }
