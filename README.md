@@ -34,4 +34,11 @@
 
 ### 如何声明新的路由
 
-在 src/pages 文件夹下新建文件夹, 初始化路由组件
+在 src/router/data.tsx 文件夹下新建文件夹, 初始化路由组件
+
+### 问题
+
+1.  husky 不生效 [husky](https://commitlint.js.org/#/guides-local-setup)
+    - 首先执行 yarn husky install
+    - npx husky add .husky/commit-msg 'npx --no -- commitlint --edit ${1}'
+    - npx husky add .husky/pre-commit 'npm lint-staged'

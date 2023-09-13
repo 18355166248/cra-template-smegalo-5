@@ -9,7 +9,8 @@
     "build-prod": "env-cmd -e production craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "plop": "plop --plopfile ./plop-template/plopfile.js"
+    "plop": "plop --plopfile ./plop-template/plopfile.js",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -49,11 +50,9 @@
     ]
   },
   "lint-staged": {
-    "*.{js,jsx,less,md,json}": [
-      "prettier --write"
-    ],
-    "*.ts?(x)": [
-      "prettier --parser=typescript --write"
+    "src/**/*.{js,jsx,less,md,ts?(x)}": [
+      "prettier --write",
+      "eslint --fix"
     ]
   },
   "authors": [
