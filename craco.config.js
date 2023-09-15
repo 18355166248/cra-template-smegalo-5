@@ -71,6 +71,7 @@ module.exports = {
           },
           // Exclude transforms that make all code slower
           exclude: ["transform-typeof-symbol"],
+          include: ["@babel/plugin-transform-class-properties"],
         },
       ],
     ],
@@ -88,14 +89,7 @@ module.exports = {
         },
         "@xmly/mi-design",
       ],
-      // ["@babel/plugin-proposal-private-property-in-object", { loose: true }],
-      ["@babel/plugin-proposal-private-methods", { loose: true }],
-      [
-        // @babel/plugin-proposal-decorators 需要在 @babel/plugin-proposal-class-properties 之前，保证装饰器先处理
-        "@babel/plugin-proposal-decorators",
-        { version: "legacy" },
-      ],
-      ["@babel/plugin-proposal-class-properties", { loose: true }],
+      // ["@babel/plugin-proposal-decorators", { version: "2023-05" }],
       /**
        * babel-plugin-react-css-modules
        *  - GitHub: https://github.com/gajus/babel-plugin-react-css-modules
