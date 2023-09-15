@@ -1,0 +1,27 @@
+@import "../../../assets/style/mixins.scss";
+
+.w200 {
+  width: 200px;
+}
+
+.h50 {
+  height: 50px;
+}
+
+.header {
+  @include borderHalf();
+}
+
+.menu {
+  @include borderHalf(right);
+}
+
+.logo {
+  height: 50px;
+  padding-left: 25px;
+  img {
+    display: "inline-block";
+    width: 26px;
+    height: 26px;
+  }
+}

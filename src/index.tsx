@@ -5,6 +5,10 @@ import "./assets/style/index.scss";
 import "./assets/style/tailwind.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import dayjs from "dayjs";
+import "dayjs/locale/zh-cn";
+
+dayjs.locale("zh-cn");
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

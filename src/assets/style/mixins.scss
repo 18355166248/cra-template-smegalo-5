@@ -1,0 +1,66 @@
+// 0.5px border
+@mixin topBorder {
+  &::after {
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 200%;
+    height: 1px;
+    background-color: var(--gray-color);
+    transform: scale(0.5);
+    content: '';
+  }
+}
+@mixin rightBorder {
+  &::after {
+    position: absolute;
+    top: -50%;
+    right: 0;
+    width: 1px;
+    height: 200%;
+    background-color: var(--gray-color);
+    transform: scale(0.5);
+    content: '';
+  }
+}
+@mixin bottomBorder {
+  &::after {
+    position: absolute;
+    bottom: 0;
+    left: -50%;
+    width: 200%;
+    height: 1px;
+    background-color: var(--gray-color);
+    transform: scale(0.5);
+    content: '';
+  }
+}
+@mixin leftBorder {
+  &::after {
+    position: absolute;
+    top: -50%;
+    left: 0;
+    width: 1px;
+    height: 200%;
+    background-color: var(--gray-color);
+    transform: scale(0.5);
+    content: '';
+  }
+}
+
+// 支持上下左右border 0.5
+@mixin borderHalf($arrow: bottom) {
+  position: relative;
+  @if $arrow == top {
+    @include topBorder();
+  }
+  @if $arrow == right {
+    @include rightBorder();
+  }
+  @if $arrow == bottom {
+    @include bottomBorder();
+  }
+  @if $arrow == left {
+    @include leftBorder();
+  }
+}

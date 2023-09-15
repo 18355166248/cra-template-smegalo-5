@@ -1,9 +1,18 @@
-import React, { FC } from "react";
+import React, { Result, Button } from "antd";
 
-interface Props {}
-
-const NotFound: FC<Props> = () => {
-  return <div>404</div>;
-};
+function NotFound() {
+  return (
+    <Result
+      status="404"
+      title="404"
+      subTitle="很抱歉, 页面不小心迷路了"
+      extra={
+        <Button type="primary" href="/">
+          返回首页
+        </Button>
+      }
+    />
+  );
+}
 
 export default NotFound;

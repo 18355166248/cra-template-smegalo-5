@@ -7,6 +7,12 @@ body {
   /* PC字体 */
   font-family: "PingFangSC-Regular", "PingFang SC", "Microsoft YaHei",
     "Helvetica Neue", Helvetica, Arial, sans-serif;
+  width: 100%;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
 }
 
 .clearfix:after {
@@ -20,4 +26,13 @@ body {
 
 .clearfix {
   zoom: 1;
+}
+
+$base-height: 12px;
+
+:root {
+  --color: #1890ff;
+  --mi-color: #1890ff;
+  --gray-color: #d9d9d9;
+  --base-height: #{$base-height};
 }
