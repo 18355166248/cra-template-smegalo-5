@@ -35,7 +35,6 @@ const MenuLayout: FC<Props> = () => {
       selectedKeys={selectKeys}
       mode="inline"
       onClick={onClickMenu}
-      theme="dark"
     ></Menu>
   );
 };

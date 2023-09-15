@@ -11,10 +11,7 @@ const XLayout: FC = () => {
     <div className="flex flex-col h-full overflow-hidden">
       <Header />
       <div className="main flex overflow-hidden flex-1">
-        <div
-          className="flex flex-col flex-none h-full w200 menu overflow-auto"
-          style={{ background: "#000c17" }}
-        >
+        <div className="flex flex-col flex-none h-full w200 menu overflow-auto">
           <MenuLayout />
         </div>
         <div className="flex flex-grow flex-col overflow-hidden">
