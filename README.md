@@ -34,6 +34,7 @@
 ### 问题
 
 1.  husky 不生效 [husky](https://commitlint.js.org/#/guides-local-setup)
+    - 删除根路径 .huksy 目录
     - 首先执行 yarn husky install
     - npx husky add .husky/commit-msg 'npx --no -- commitlint --edit ${1}'
-    - npx husky add .husky/pre-commit 'npm lint-staged'
+    - npx husky add .husky/pre-commit 'npx lint-staged'
