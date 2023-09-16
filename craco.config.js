@@ -71,7 +71,6 @@ module.exports = {
           },
           // Exclude transforms that make all code slower
           exclude: ["transform-typeof-symbol"],
-          include: ["@babel/plugin-transform-class-properties"],
         },
       ],
     ],
@@ -89,6 +88,9 @@ module.exports = {
         },
         "@xmly/mi-design",
       ],
+      ["@babel/plugin-proposal-private-property-in-object", { loose: true }],
+      ["@babel/plugin-proposal-private-methods", { loose: true }],
+      ["@babel/plugin-proposal-class-properties", { loose: true }],
       // ["@babel/plugin-proposal-decorators", { version: "2023-05" }],
       /**
        * babel-plugin-react-css-modules
