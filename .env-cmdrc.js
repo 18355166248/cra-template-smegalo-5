@@ -17,7 +17,7 @@ const {
 
 module.exports = {
   development: {
-    REACT_APP_BUILD_ENV: "test", // 编译环境
+    REACT_APP_BUILD_ENV: "development", // 编译环境
     PUBLIC_URL: "", // 配置静态资源 url,最终影响 output下的 publicPath（开发环境不需要配置）
     DANGEROUSLY_DISABLE_HOST_CHECK: true, // 允许代理 host 通过 IP 地址访问
     // HOST: 'local.test.ximalaya.com', // 指定启动时的 host（需提前修改 host 映射）

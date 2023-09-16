@@ -92,3 +92,25 @@ export function getOpenKeys(list: AntdItemTypeWithRouter[]): string[] {
   });
   return keys;
 }
+
+// 获取第一个菜单地址
+export function getFirstMenuUrl(list: AntdItemTypeWithRouter[]) {
+  let firstMenuUrl = "";
+  dfs(list);
+  return firstMenuUrl;
+
+  function dfs(list: AntdItemTypeWithRouter[], parentPath?: string) {
+    for (let i = 0; i < list.length; i++) {
+      const item = list[i] as any;
+      const v = { ...item }; // 防止影响源数据
+      v.path = (parentPath || "") + "/" + v.path;
+
+      if (v.element && !firstMenuUrl) {
+        firstMenuUrl = v.path;
+        break;
+      } else if (Array.isArray(item.children)) {
+        dfs(item.children, v.path);
+      }
+    }
+  }
+}

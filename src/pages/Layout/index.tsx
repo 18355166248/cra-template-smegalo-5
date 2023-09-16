@@ -1,12 +1,24 @@
-import React, { FC } from "react";
+import { FC, useEffect } from "react";
 import "./style/index.scoped.scss";
 import MenuLayout from "./MenuLayout";
 import Header from "./Header";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Suspense } from "react";
+import { getFirstMenuUrl } from "./menu.util";
+import { routerConfig } from "@/router/data";
 
 const XLayout: FC = () => {
+  let location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      const firstMenuUrl = getFirstMenuUrl(routerConfig);
+      firstMenuUrl && navigate(firstMenuUrl, { replace: true });
+    }
+  }, [location.pathname, navigate]);
+
   return (
     <div className="flex flex-col h-full overflow-hidden">
       <Header />
