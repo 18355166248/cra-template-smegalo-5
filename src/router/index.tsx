@@ -18,11 +18,6 @@ function gerRouterParams(list: AntdItemTypeWithRouter[]) {
 }
 const routerParams = gerRouterParams(routerConfig);
 
-// 测试环境自动拼接重定向到basename
-if (isDev) {
-  window.history.pushState(null, "", basePathUrl);
-}
-
 export const router = createBrowserRouter(
   [
     {
