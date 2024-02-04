@@ -88,10 +88,6 @@ module.exports = {
         },
         "@xmly/mi-design",
       ],
-      ["@babel/plugin-proposal-private-property-in-object", { loose: true }],
-      ["@babel/plugin-proposal-private-methods", { loose: true }],
-      ["@babel/plugin-proposal-class-properties", { loose: true }],
-      // ["@babel/plugin-proposal-decorators", { version: "2023-05" }],
       /**
        * babel-plugin-react-css-modules
        *  - GitHub: https://github.com/gajus/babel-plugin-react-css-modules

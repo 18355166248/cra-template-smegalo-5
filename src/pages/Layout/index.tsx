@@ -28,7 +28,7 @@ const XLayout: FC = () => {
         </div>
         <div className="flex flex-grow flex-col overflow-hidden">
           <div className="flex-grow h-full overflow-y-scroll">
-            <div className="bg-white min-h-full p-4">
+            <div className="bg-white min-h-full p-4 box-border">
               <ErrorBoundary>
                 <Suspense>
                   <Outlet />
