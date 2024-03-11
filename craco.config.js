@@ -29,10 +29,11 @@ const CircularDependencyPlugin = require("circular-dependency-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const vConsolePlugin = require("vconsole-webpack-plugin");
 const genericNames = require("generic-names");
-// antd 主题样式变量: https://ant.design/docs/react/customize-theme-cn#Ant-Design-%E7%9A%84%E6%A0%B7%E5%BC%8F%E5%8F%98%E9%87%8F
-const { antdTheme } = require("./package.json");
+const { sentryWebpackPlugin } = require("@sentry/webpack-plugin");
+const { name: projectName } = require("./package.json");
 
 // 判断编译环境是否为生产
+const isBuildTest = process.env.REACT_APP_BUILD_ENV === "development";
 const isBuildProd = process.env.REACT_APP_BUILD_ENV === "production";
 // 判断 node 运行环境是否为 production
 const isProd = process.env.NODE_ENV === "production";
@@ -49,16 +50,16 @@ module.exports = {
    * 扩展 babel 配置
    */
   babel: {
-    assumptions: {
-      /**
-       * https://babeljs.io/docs/en/assumptions#setpublicclassfields
-       *
-       * 装饰器的 legancy: true，依赖此配置
-       *  - https://babeljs.io/docs/en/babel-plugin-proposal-decorators#legacy
-       */
-      setPublicClassFields: true,
-      privateFieldsAsSymbols: true,
-    },
+    // assumptions: {
+    //   /**
+    //    * https://babeljs.io/docs/en/assumptions#setpublicclassfields
+    //    *
+    //    * 装饰器的 legancy: true，依赖此配置
+    //    *  - https://babeljs.io/docs/en/babel-plugin-proposal-decorators#legacy
+    //    */
+    //   setPublicClassFields: true,
+    //   privateFieldsAsSymbols: true,
+    // },
     presets: [
       [
         "@babel/preset-env",
@@ -77,24 +78,19 @@ module.exports = {
       ],
     ],
     plugins: [
-      /**
-       * AntDesign 按需加载
-       */
       [
         "babel-plugin-import",
         {
-          libraryName: "antd",
+          libraryName: "@xmly/mi-design",
           libraryDirectory: "es",
-          style: true,
+          camel2DashComponentName: false, // 避免 customName 和拼接参数格式化成驼峰
+          customName: (name) => {
+            return `@xmly/mi-design/dist/components/common/${name}`;
+          },
+          style: (path) => `${path}/style/index.less`,
         },
-        "antd",
+        "@xmly/mi-design",
       ],
-      [
-        // @babel/plugin-proposal-decorators 需要在 @babel/plugin-proposal-class-properties 之前，保证装饰器先处理
-        "@babel/plugin-proposal-decorators",
-        { version: "legacy" },
-      ],
-      ["@babel/plugin-proposal-class-properties", { loose: true }],
       /**
        * babel-plugin-react-css-modules
        *  - GitHub: https://github.com/gajus/babel-plugin-react-css-modules
@@ -138,6 +134,18 @@ module.exports = {
       //     },
       //   },
       // ],
+      ...when(
+        isBuildTest || isBuildProd,
+        () => [
+          sentryWebpackPlugin({
+            url: process.env.REACT_APP_SOURCE_MAPPING_URL,
+            org: "xmly",
+            project: projectName,
+            authToken: process.env.SENTRY_AUTH_TOKEN,
+          }),
+        ],
+        []
+      ),
     ],
   },
   style: {
@@ -149,9 +157,25 @@ module.exports = {
       localIdentName,
     },
     postcss: {
+      loaderOptions: {
+        postcssOptions: {
+          plugins: [
+            require("postcss-pxtorem")({
+              rootValue: 75, // rootValue根据设计稿宽度除以10进行设置
+              unitPrecision: 5, //（数字）允许REM单位增长的十进制数字
+              replace: true, // （布尔值）替换包含rems的规则，而不添加后备
+              mediaQuery: false, // （布尔值）允许在媒体查询中转换px
+              minPixelValue: 0, // （数字）设置要替换的最小像素值
+              selectorBlackList: ["norem"], // 忽略转换正则匹配项
+              propList: ["*"], // 可以从px转换为rem的属性，匹配正则
+              exclude: /node_modules/i, // （字符串，正则表达式，函数）要忽略并保留为px的文件路径
+            }),
+          ],
+        },
+      },
       plugins: {
-        tailwindcss: {},
-        autoprefixer: {},
+        // tailwindcss: {},
+        // autoprefixer: {},
       },
     },
   },
@@ -284,19 +308,40 @@ module.exports = {
         ],
       ];
 
-      webpackConfig.optimization.minimizer.map((plugin) => {
-        /**
-         * TerserPlugin
-         */
-        if (plugin instanceof TerserPlugin) {
-          Object.assign(plugin.options.terserOptions.compress, {
-            drop_debugger: shouldDropDebugger, // 删除 debugger
-            drop_console: shouldDropConsole, // 删除 console
-          });
-        }
+      webpackConfig.optimization.minimizer =
+        webpackConfig.optimization.minimizer.map((plugin) => {
+          /**
+           * TerserPlugin
+           */
+          if (plugin instanceof TerserPlugin) {
+            plugin = new TerserPlugin({
+              terserOptions: {
+                parse: {
+                  ecma: 8,
+                },
+                compress: {
+                  ecma: 5,
+                  warnings: false,
+                  comparisons: false,
+                  inline: 2,
+                  drop_console: shouldDropConsole,
+                },
+                mangle: {
+                  safari10: true,
+                },
+                keep_classnames: false,
+                keep_fnames: false,
+                output: {
+                  ecma: 5,
+                  comments: false,
+                  ascii_only: true,
+                },
+              },
+            });
+          }
 
-        return plugin;
-      });
+          return plugin;
+        });
 
       /**
        * webpack split chunks
@@ -359,13 +404,6 @@ module.exports = {
               exclude: /\.module\.less$/,
             },
           };
-        },
-        lessLoaderOptions: {
-          lessOptions: {
-            // 自定义 antd 主题
-            modifyVars: antdTheme,
-            javascriptEnabled: true,
-          },
         },
       },
     },

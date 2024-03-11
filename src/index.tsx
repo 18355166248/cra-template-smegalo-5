@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./assets/style/index.css";
 import "./assets/style/index.scss";
-import "./assets/style/tailwind.css";
+// import "./assets/style/tailwind.css";
+import "amfe-flexible";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
