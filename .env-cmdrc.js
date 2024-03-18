@@ -31,14 +31,6 @@ module.exports = {
     REMOVE_FILENAME_HASH: false, // 是否移除编译产物中 js/css 文件名的 hash 值
     ENABLE_VCONSOLE: false,
   },
-  uat: {
-    REACT_APP_BUILD_ENV: "uat",
-    PUBLIC_URL: `https://s1.uat.xmcdn.com/yx/${projectName}/last/${outputDir}/`,
-    INLINE_RUNTIME_CHUNK: false,
-    GENERATE_SOURCEMAP: true,
-    REMOVE_FILENAME_HASH: false,
-    ENABLE_VCONSOLE: false,
-  },
   production: {
     REACT_APP_BUILD_ENV: "production",
     PUBLIC_URL: `https://s1.xmcdn.com/yx/${projectName}/last/${outputDir}/`, // 尽量使用 https，避免运营商劫持资源

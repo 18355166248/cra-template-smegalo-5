@@ -29,11 +29,8 @@ const CircularDependencyPlugin = require("circular-dependency-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const vConsolePlugin = require("vconsole-webpack-plugin");
 const genericNames = require("generic-names");
-const { sentryWebpackPlugin } = require("@sentry/webpack-plugin");
-const { name: projectName } = require("./package.json");
 
 // 判断编译环境是否为生产
-const isBuildTest = process.env.REACT_APP_BUILD_ENV === "development";
 const isBuildProd = process.env.REACT_APP_BUILD_ENV === "production";
 // 判断 node 运行环境是否为 production
 const isProd = process.env.NODE_ENV === "production";
@@ -78,6 +75,9 @@ module.exports = {
       ],
     ],
     plugins: [
+      ["@babel/plugin-transform-private-property-in-object", { loose: true }],
+      ["@babel/plugin-transform-private-methods", { loose: true }],
+      ["@babel/plugin-transform-class-properties", { loose: true }],
       [
         "babel-plugin-import",
         {
@@ -134,18 +134,6 @@ module.exports = {
       //     },
       //   },
       // ],
-      ...when(
-        isBuildTest || isBuildProd,
-        () => [
-          sentryWebpackPlugin({
-            url: process.env.REACT_APP_SOURCE_MAPPING_URL,
-            org: "xmly",
-            project: projectName,
-            authToken: process.env.SENTRY_AUTH_TOKEN,
-          }),
-        ],
-        []
-      ),
     ],
   },
   style: {
@@ -174,8 +162,8 @@ module.exports = {
         },
       },
       plugins: {
-        // tailwindcss: {},
-        // autoprefixer: {},
+        tailwindcss: {},
+        autoprefixer: {},
       },
     },
   },
@@ -215,16 +203,16 @@ module.exports = {
       /**
        * 喜马拉雅前端私有 source map，编译生产代码时更换 map 文件链接
        */
-      ...when(
-        isBuildProd,
-        () => [
-          new webpack.SourceMapDevToolPlugin({
-            publicPath: sourceMappingURL,
-            filename: "[file].map",
-          }),
-        ],
-        []
-      ),
+      // ...when(
+      //   isBuildProd,
+      //   () => [
+      //     new webpack.SourceMapDevToolPlugin({
+      //       publicPath: sourceMappingURL,
+      //       filename: "[file].map",
+      //     }),
+      //   ],
+      //   []
+      // ),
       /**
        * vconsole-webpack-plugin
        *  - 生产环境，强制不会生效

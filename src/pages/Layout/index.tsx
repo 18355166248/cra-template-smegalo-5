@@ -20,7 +20,7 @@ function CustomLink({ children, to, ...props }: LinkProps) {
 
 const Layout = () => {
   return (
-    <div className="mt-10">
+    <div className="mt-2">
       <nav className="mb-2">
         <CustomLink to="/">Home</CustomLink>
         <CustomLink to="/Test">Test</CustomLink>

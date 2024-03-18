@@ -7,11 +7,11 @@ export function Fallback() {
 
 function App() {
   return (
-    <div className="App ml-10">
-      <header className="mt-20 text-pink-600 font-extrabold text-4xl tracking-tight">
+    <div className="App ml-5">
+      <header className="my-5 text-pink-600 font-extrabold text-xl tracking-tight">
         CRA-TEMPLATE-SMEGALO
       </header>
-      <div className="mt-10 text-blue-400 font-extrabold text-xl tracking-tight">
+      <div className="text-blue-400 font-extrabold text-l tracking-tight">
         <div>使用框架</div>
         <div className="mb-2">
           <a
