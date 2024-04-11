@@ -187,16 +187,16 @@ module.exports = {
       /**
        * 喜马拉雅前端私有 source map，编译生产代码时更换 map 文件链接
        */
-      // ...when(
-      //   isBuildProd,
-      //   () => [
-      //     new webpack.SourceMapDevToolPlugin({
-      //       publicPath: sourceMappingURL,
-      //       filename: "[file].map",
-      //     }),
-      //   ],
-      //   []
-      // ),
+      ...when(
+        isBuildProd,
+        () => [
+          new webpack.SourceMapDevToolPlugin({
+            publicPath: sourceMappingURL,
+            filename: "[file].map",
+          }),
+        ],
+        []
+      ),
       /**
        * vconsole-webpack-plugin
        *  - 生产环境，强制不会生效

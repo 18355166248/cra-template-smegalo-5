@@ -7,6 +7,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import dayjs from "dayjs";
 import "dayjs/locale/zh-cn";
+import { ConfigProvider, ConfigProviderProps } from "antd";
+import zhCN from "antd/locale/zh_CN";
+
+type Locale = ConfigProviderProps["locale"];
 
 dayjs.locale("zh-cn");
 
@@ -15,7 +19,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <ConfigProvider locale={zhCN as Locale}>
+      <App />
+    </ConfigProvider>
   </React.StrictMode>
 );
 
