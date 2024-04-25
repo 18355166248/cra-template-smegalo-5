@@ -1,6 +1,7 @@
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
 import { useEffect } from 'react';
+import { basePathUrl } from './constants/common.const';
 
 export function Fallback() {
   return <p>加载中...</p>;
@@ -8,8 +9,8 @@ export function Fallback() {
 
 function App() {
   useEffect(() => {
-    if (window.location.pathname === "/" && basename) {
-      window.location.href = basename;
+    if (window.location.pathname === "/" && basePathUrl) {
+      window.location.href = basePathUrl;
     }
   }, []);
 
