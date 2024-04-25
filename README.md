@@ -1,4 +1,4 @@
-# continuous-subscribe-checkstand
+# cra-template-smegalo-5
 
 使用框架
 

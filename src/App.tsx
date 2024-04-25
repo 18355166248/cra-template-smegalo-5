@@ -1,11 +1,18 @@
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
+import { useEffect } from 'react';
 
 export function Fallback() {
   return <p>加载中...</p>;
 }
 
 function App() {
+  useEffect(() => {
+    if (window.location.pathname === "/" && basename) {
+      window.location.href = basename;
+    }
+  }, []);
+
   return (
     <div className="App ml-5">
       <header className="my-5 text-pink-600 font-extrabold text-xl tracking-tight">
