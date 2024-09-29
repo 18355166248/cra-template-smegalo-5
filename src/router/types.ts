@@ -1,4 +1,4 @@
-import { MenuDividerType, MenuItemType } from "antd/lib/menu/hooks/useItems";
+import { MenuItemType, MenuDividerType } from "antd/es/menu/interface";
 import { NonIndexRouteObject } from "react-router-dom";
 import type {
   MenuItemGroupType as RcMenuItemGroupType,
